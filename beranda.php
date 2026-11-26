@@ -1,0 +1,82 @@
+<?php
+include './src/koneksi.php';
+
+if (isset($_SESSION['pesan'])) {
+    $pesan = $_SESSION['pesan'];
+    unset($_SESSION['pesan']);
+}
+
+if (empty($_SESSION['id'])) {
+    header('location:./loginfirst.php');
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPK | Metode MOOSRA</title>
+    <?php include './src/header.php'; ?>
+</head>
+
+<body onload="<?= @$pesan ?>" class="select-none">
+    <?php include './src/navbar.php'; ?>
+
+    <div class="max-w-5xl mx-auto flex flex-col items-center justify-center h-screen -mt-20">
+        <div class="text-center font-bold text-4xl">Aplikasi Pengambilan Keputusan <br> Dengan Menggunakan
+            <span class="text-transparent pl-1 bg-clip-text bg-gradient-to-r from-primary via-secondary to-secondary">Metode MOORA</span>
+        </div>
+        <hr class="w-48 h-2 outline-none mx-auto border-none bg-gradient-to-r from-primary via-primary to-secondary rounded-full my-4">
+        <div class="text-center mb-24">MOORA (Multi-Objective Optimization on the Basis of Ratio Analysis) adalah metode pengambilan keputusan multikriteria yang digunakan untuk menentukan alternatif terbaik dari beberapa pilihan berdasarkan sejumlah kriteria. </div>
+
+        <div class="grid grid-cols-3 gap-4 justify-center items-center w-[46rem]">
+            <a href="./alternatif.php" class="card bg-base-200 hover:bg-base-300 transition-all duration-300 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title">Alternatif</h2>
+                    <?php
+                    $query = "SELECT COUNT(*) as total FROM tbalternatif";
+                    $result = $koneksi->query($query);
+                    if ($result) {
+                        $row = $result->fetch_assoc();
+                    ?>
+                        <div class="card-actions justify-end text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-primary via-primary to-secondary"><?= $row['total'] ?></div>
+                    <?php }
+                    ?>
+                </div>
+            </a>
+            <a href="./kriteria.php" class="card bg-base-200 hover:bg-base-300 transition-all duration-300 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title">Kriteria</h2>
+                    <?php
+                    $query = "SELECT COUNT(*) as total FROM tbkriteria";
+                    $result = $koneksi->query($query);
+                    if ($result) {
+                        $row = $result->fetch_assoc();
+                    ?>
+                        <div class="card-actions justify-end text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-primary via-primary to-secondary"><?= $row['total'] ?></div>
+                    <?php }
+                    ?>
+                </div>
+            </a>
+            <a href="./subkriteria.php" class="card bg-base-200 hover:bg-base-300 transition-all duration-300 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title">Sub Kriteria</h2>
+                    <?php
+                    $query = "SELECT COUNT(*) as total FROM tbsubkriteria";
+                    $result = $koneksi->query($query);
+                    if ($result) {
+                        $row = $result->fetch_assoc();
+                    ?>
+                        <div class="card-actions justify-end text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-primary via-primary to-secondary"><?= $row['total'] ?></div>
+                    <?php }
+                    ?>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>
